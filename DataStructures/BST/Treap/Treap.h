@@ -1,5 +1,4 @@
 #pragma once
-#include <cstdint>
 #include <stdexcept>
 #include <random>
 #include <limits>
@@ -83,7 +82,7 @@ private:
             return leftNode == nullptr ? rightNode : leftNode;
         }
         if (leftNode->y > rightNode->y) {
-            leftNode->rightChild = this-merge(leftNode->rightChild, rightNode);
+            leftNode->rightChild = this->merge(leftNode->rightChild, rightNode);
             return leftNode;
         }
         rightNode->leftChild = this->merge(leftNode, rightNode->leftChild);
@@ -115,9 +114,12 @@ private:
             return newNode;
         }
         if (newNode->key < curNode->key) {
-            return this->insert(newNode, curNode->leftChild);
+            curNode->leftChild = this->insert(newNode, curNode->leftChild);
         }
-        return this->insert(newNode, curNode->rightChild);
+        else {
+            curNode->rightChild = this->insert(newNode, curNode->rightChild);
+        }
+        return curNode;
     }
 
     Node* remove(const T1 &key, Node *curNode) {
@@ -151,21 +153,23 @@ private:
             return;
         }
         arr.push_back(curNode->key);
-        this->inOrderTraversal(arr, curNode->leftChild);
-        this->inOrderTraversal(arr, curNode->rightChild);
+        this->preOrderTraversal(arr, curNode->leftChild);
+        this->preOrderTraversal(arr, curNode->rightChild);
     }
 
     void postOrderTraversal(std::vector<T1> &arr, Node *curNode) {
         if (curNode == nullptr) {
             return;
         }
-        this->inOrderTraversal(arr, curNode->leftChild);
-        this->inOrderTraversal(arr, curNode->rightChild);
+        this->postOrderTraversal(arr, curNode->leftChild);
+        this->postOrderTraversal(arr, curNode->rightChild);
         arr.push_back(curNode->key);
     }
 
 public:
     explicit Treap(const Treap &other) = delete;
+
+    explicit Treap() = default;
 
     Treap& operator=(const Treap &other) = delete;
 
@@ -251,19 +255,19 @@ public:
 
     [[nodiscard]] std::vector<T1> inOrderTraversal() {
         std::vector<T1> inOrderArray{};
-        this->inOrderTraversal(inOrderTraversal, this->root);
+        this->inOrderTraversal(inOrderArray, this->root);
         return inOrderArray;
     }
 
     [[nodiscard]] std::vector<T1> preOrderTraversal() {
         std::vector<T1> preOrderArray{};
-        this->preOrderTraversal(preOrderTraversal, this->root);
+        this->preOrderTraversal(preOrderArray, this->root);
         return preOrderArray;
     }
 
     [[nodiscard]] std::vector<T1> postOrderTraversal() {
         std::vector<T1> postOrderArray{};
-        this->postOrderTraversal(postOrderTraversal, this->root);
+        this->postOrderTraversal(postOrderArray, this->root);
         return postOrderArray;
     }
 };
