@@ -1,1 +1,2 @@
 add_subdirectory(BST)
+add_subdirectory(LinkedList)
