@@ -1,0 +1,2 @@
+add_subdirectory(AVLTree)
+add_subdirectory(Treap)
