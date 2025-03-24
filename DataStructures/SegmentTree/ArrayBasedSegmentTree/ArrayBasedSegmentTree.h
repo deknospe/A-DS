@@ -59,9 +59,7 @@ private:
         if (lPtr <= this->arr[curIndex]->lProjection && this->arr[curIndex]->rProjection <= rPtr) {
             return this->arr[curIndex]->value;
         }
-        const T result = func(this->get(lPtr, rPtr, 2 * curIndex), this->get(lPtr, rPtr, (2 * curIndex)  + 1));
-        this->arr[curIndex]->value = func(this->arr[2 * curIndex]->value, this->arr[2 * curIndex + 1]->value);
-        return result;
+        return func(this->get(lPtr, rPtr, 2 * curIndex), this->get(lPtr, rPtr, (2 * curIndex)  + 1));
     }
 public:
     explicit ArrayBasedSegmentTree(const std::vector<T> &arr) noexcept
@@ -101,14 +99,14 @@ public:
 
     void set(const size_t index, const T& newValue) {
         if (index >= this->size) {
-            throw std::out_of_range("MassSegmentTree: set(size_t index, T newValue) - index is out of range");
+            throw std::out_of_range("ArrayBasedSegmentTree: set(size_t index, T newValue) - index is out of range");
         }
         this->set(index + this->size, newValue, 1);
     }
 
     [[nodiscard]] T get(const size_t lPtr, const size_t rPtr) {
         if (lPtr >= rPtr || rPtr > this->size) {
-            throw std::out_of_range("MassSegmentTree: get(size_t lPtr, size_t rPtr) - index is out of range");
+            throw std::out_of_range("ArrayBasedSegmentTree: get(size_t lPtr, size_t rPtr) - index is out of range");
         }
         return this->get(lPtr + this->size, rPtr + this->size, 1);
     }

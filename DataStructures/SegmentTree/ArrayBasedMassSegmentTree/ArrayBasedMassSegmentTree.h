@@ -129,21 +129,21 @@ public:
 
     void set(const size_t index, const T& newValue) {
         if (index >= this->size) {
-            throw std::out_of_range("MassSegmentTree: set(size_t index, T newValue) - index is out of range");
+            throw std::out_of_range("ArrayBasedMassSegmentTree: set(size_t index, T newValue) - index is out of range");
         }
         this->set(index + this->size, newValue, 1);
     }
 
     void massUpdate(const size_t lPtr, const size_t rPtr, const T& value) {
         if (lPtr >= rPtr || rPtr > this->size) {
-            throw std::out_of_range("MassSegmentTree: massUpdate(size_t lPtr, size_t rPtr, T value) - index is out of range");
+            throw std::out_of_range("ArrayBasedMassSegmentTree: massUpdate(size_t lPtr, size_t rPtr, T value) - index is out of range");
         }
         this->massUpdate(lPtr + this->size, rPtr + this->size, value, 1);
     }
 
     [[nodiscard]] T get(const size_t lPtr, const size_t rPtr) {
         if (lPtr >= rPtr || rPtr > this->size) {
-            throw std::out_of_range("MassSegmentTree: get(size_t lPtr, size_t rPtr) - index is out of range");
+            throw std::out_of_range("ArrayBasedMassSegmentTree: get(size_t lPtr, size_t rPtr) - index is out of range");
         }
         return this->get(lPtr + this->size, rPtr + this->size, 1);
     }

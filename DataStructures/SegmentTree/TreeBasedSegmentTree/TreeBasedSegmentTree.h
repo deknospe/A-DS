@@ -80,8 +80,8 @@ public:
             for (size_t i = 0; i < nextLevel.size(); ++i) {
                 nextLevel[i] = new Node(func(curLevel[2 * i]->value, curLevel[2 * i + 1]->value),
                     curLevel[2 * i], curLevel[2 * i + 1], curLevel[2 * i]->lProjection, curLevel[2 * i + 1]->rProjection);
+                curLevel[i] = nextLevel[i];
             }
-            curLevel = nextLevel;
             nextLevel.resize(nextLevel.size() / 2);
         }
         this->root = curLevel[0];
@@ -103,8 +103,8 @@ public:
             for (size_t i = 0; i < nextLevel.size(); ++i) {
                 nextLevel[i] = new Node(func(curLevel[2 * i]->value, curLevel[2 * i + 1]->value),
                     curLevel[2 * i], curLevel[2 * i + 1], curLevel[2 * i]->lProjection, curLevel[2 * i + 1]->rProjection);
+                curLevel[i] = nextLevel[i];
             }
-            curLevel = nextLevel;
             nextLevel.resize(nextLevel.size() / 2);
         }
         this->root = curLevel[0];
@@ -112,15 +112,15 @@ public:
 
     void set(const size_t index, const T &newValue) {
         if (index >= this->size) {
-            throw std::out_of_range("TreeBasedMassSegmentTree: set(size_t index, T newValue) - index is out of range");
+            throw std::out_of_range("TreeBasedSegmentTree: set(size_t index, T newValue) - index is out of range");
         }
         this->set(index, newValue, this->root);
     }
 
     T get(const size_t lPtr, const size_t rPtr) {
         if (lPtr >= rPtr || rPtr > this->size) {
-            throw std::out_of_range("TreeBasedMassSegmentTree: get(size_t lPtr, size_t rPtr) - index is out of range");
+            throw std::out_of_range("TreeBasedSegmentTree: get(size_t lPtr, size_t rPtr) - index is out of range");
         }
-        return this->get(lPtr + this->size, rPtr + this->size, this->root);
+        return this->get(lPtr, rPtr, this->root);
     }
 };
