@@ -1,0 +1,4 @@
+add_subdirectory(TreeBasedMassSegmentTree)
+add_subdirectory(TreeBasedSegmentTree)
+add_subdirectory(ArrayBasedMassSegmentTree)
+add_subdirectory(ArrayBasedSegmentTree)

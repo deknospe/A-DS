@@ -1,0 +1,1 @@
+add_library(ArrayBasedSegmentTree ArrayBasedSegmentTree.h ArrayBasedSegmentTree.cpp)

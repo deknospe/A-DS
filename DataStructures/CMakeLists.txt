@@ -1,2 +1,3 @@
 add_subdirectory(BST)
 add_subdirectory(LinkedList)
+add_subdirectory(SegmentTree)

@@ -1,0 +1,126 @@
+#pragma once
+#include <stdexcept>
+#include <vector>
+
+
+template <typename T, T(*func)(T, T), T neutralElem> class TreeBasedSegmentTree {
+private:
+    static size_t getNearestDegreeOfTwo(size_t num) {
+        if ((num & (num - 1)) == 0) {
+            return num;
+        }
+
+        num |= num >> 1;
+        num |= num >> 2;
+        num |= num >> 4;
+        num |= num >> 8;
+        num |= num >> 16;
+        num |= num >> 32;
+
+        return num + 1;
+    }
+
+    struct Node {
+        T value;
+        Node *leftChild;
+        Node *rightChild;
+        size_t lProjection;
+        size_t rProjection;
+
+        explicit Node(const T& value, Node *lChild, Node *rChild, const size_t l, const size_t r)
+            : value(value)
+            , leftChild(lChild)
+            , rightChild(rChild)
+            , lProjection(l)
+            , rProjection(r)
+        {}
+
+        explicit Node() = default;
+    };
+
+    size_t size;
+    Node *root;
+
+    void set(const size_t index, const T &newValue, Node *curNode) const noexcept {
+        if (curNode->rProjection == curNode->lProjection + 1) {
+            curNode->value = newValue;
+            return;
+        }
+        const size_t mid = (curNode->lProjection + curNode->rProjection) / 2;
+        if (index < mid) {
+            this->set(index, newValue, curNode->leftChild);
+        }
+        else {
+            this->set(index, newValue, curNode->rightChild);
+        }
+        curNode->value = func(curNode->leftChild->value, curNode->rightChild->value);
+    }
+
+    T get(const size_t lPtr, const size_t rPtr, Node* curNode) const noexcept {
+        if (curNode->rProjection <= lPtr || curNode->lProjection >= rPtr) {
+            return neutralElem;
+        }
+        if (lPtr <= curNode->lProjection && curNode->rProjection <= rPtr) {
+            return curNode->value;
+        }
+        return func(this->get(lPtr, rPtr, curNode->leftChild), this->get(lPtr, rPtr, curNode->rightChild));
+    }
+
+public:
+    explicit TreeBasedSegmentTree(const size_t size)
+        : size(getNearestDegreeOfTwo(size))
+        , root(nullptr)
+    {
+        std::vector<Node*> curLevel(this->size);
+        for (size_t i = 0; i < this->size; ++i) {
+            curLevel[i] = new Node(neutralElem, nullptr, nullptr, i, i + 1);
+        }
+        std::vector<Node*> nextLevel(this->size / 2);
+        while (!nextLevel.empty()) {
+            for (size_t i = 0; i < nextLevel.size(); ++i) {
+                nextLevel[i] = new Node(func(curLevel[2 * i]->value, curLevel[2 * i + 1]->value),
+                    curLevel[2 * i], curLevel[2 * i + 1], curLevel[2 * i]->lProjection, curLevel[2 * i + 1]->rProjection);
+            }
+            curLevel = nextLevel;
+            nextLevel.resize(nextLevel.size() / 2);
+        }
+        this->root = curLevel[0];
+    }
+
+    explicit TreeBasedSegmentTree(const std::vector<T> &arr)
+        : size(getNearestDegreeOfTwo(arr.size()))
+        , root(nullptr)
+    {
+        std::vector<Node*> curLevel(this->size);
+        for (size_t i = 0; i < arr.size(); ++i) {
+            curLevel[i] = new Node(arr[i], nullptr, nullptr, i, i + 1);
+        }
+        for (size_t i = arr.size(); i < this->size; ++i) {
+            curLevel[i] = new Node(neutralElem, nullptr, nullptr, i, i + 1);
+        }
+        std::vector<Node*> nextLevel(this->size / 2);
+        while (!nextLevel.empty()) {
+            for (size_t i = 0; i < nextLevel.size(); ++i) {
+                nextLevel[i] = new Node(func(curLevel[2 * i]->value, curLevel[2 * i + 1]->value),
+                    curLevel[2 * i], curLevel[2 * i + 1], curLevel[2 * i]->lProjection, curLevel[2 * i + 1]->rProjection);
+            }
+            curLevel = nextLevel;
+            nextLevel.resize(nextLevel.size() / 2);
+        }
+        this->root = curLevel[0];
+    }
+
+    void set(const size_t index, const T &newValue) {
+        if (index >= this->size) {
+            throw std::out_of_range("TreeBasedMassSegmentTree: set(size_t index, T newValue) - index is out of range");
+        }
+        this->set(index, newValue, this->root);
+    }
+
+    T get(const size_t lPtr, const size_t rPtr) {
+        if (lPtr >= rPtr || rPtr > this->size) {
+            throw std::out_of_range("TreeBasedMassSegmentTree: get(size_t lPtr, size_t rPtr) - index is out of range");
+        }
+        return this->get(lPtr + this->size, rPtr + this->size, this->root);
+    }
+};

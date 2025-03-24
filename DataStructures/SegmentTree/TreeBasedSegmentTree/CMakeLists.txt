@@ -1,0 +1,1 @@
+add_library(TreeBasedSegmentTree TreeBasedSegmentTree.h TreeBasedSegmentTree.cpp)
