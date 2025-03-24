@@ -7,20 +7,16 @@
 
 template <typename T1, typename T2> class Treap {
 private:
-
-    static std::random_device rd;
-    static std::mt19937 gen;
-    static std::uniform_int_distribution<size_t> dist;
-
     struct Node {
         T1 key;
-        size_t y = dist(gen);
+        size_t y;
         T2 value;
         Node *leftChild = nullptr;
         Node *rightChild = nullptr;
 
-        explicit Node(T1 key, T2 value)
+        explicit Node(T1 key, size_t y, T2 value)
             : key(key)
+            , y(y)
             , value(value)
         {}
     };
@@ -167,8 +163,6 @@ private:
     }
 
 public:
-    explicit Treap(const Treap &other) = delete;
-
     explicit Treap() = default;
 
     Treap& operator=(const Treap &other) = delete;
@@ -193,7 +187,10 @@ public:
             this->operator[](key) = value;
             return;
         }
-        this->root = this->insert(new Node(key, value), this->root);
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<size_t> dist(0, std::numeric_limits<size_t>::max());
+        this->root = this->insert(new Node(key, dist(gen), value), this->root);
     }
 
     void remove(const T1 &key) {
@@ -271,13 +268,3 @@ public:
         return postOrderArray;
     }
 };
-
-
-template <typename T1, typename T2>
-std::random_device Treap<T1, T2>::rd;
-
-template <typename T1, typename T2>
-std::mt19937 Treap<T1, T2>::gen(Treap<T1, T2>::rd());
-
-template <typename T1, typename T2>
-std::uniform_int_distribution<size_t> Treap<T1, T2>::dist(0, std::numeric_limits<size_t>::max());
