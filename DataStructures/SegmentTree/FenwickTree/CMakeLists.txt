@@ -1,0 +1,1 @@
+add_library(FenwickTree FenwickTree.h FenwickTree.cpp)
