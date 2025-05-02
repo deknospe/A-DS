@@ -1,3 +1,4 @@
 add_subdirectory(AVLTree)
 add_subdirectory(Treap)
 add_subdirectory(ImplicitKeyTree)
+add_subdirectory(SplayTree)

@@ -1,0 +1,1 @@
+add_library(SplayTree SplayTree.h SplayTree.cpp)
