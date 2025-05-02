@@ -215,7 +215,7 @@ public:
     T1 getMin() {
         const Node* node = this->getMin(this->root);
         if (node == nullptr) {
-            throw std::out_of_range("AVLTree: getMin(T1 key) - tree is empty");
+            throw std::out_of_range("AVLTree: getMin() - tree is empty");
         }
         return node->key;
     }
@@ -223,7 +223,7 @@ public:
     T1 getMax() {
         const Node* node = this->getMax(this->root);
         if (node == nullptr) {
-            throw std::out_of_range("AVLTree: getMax(T1 key) - tree is empty");
+            throw std::out_of_range("AVLTree: getMax() - tree is empty");
         }
         return node->key;
     }
