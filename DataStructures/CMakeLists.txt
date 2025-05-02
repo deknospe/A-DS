@@ -1,3 +1,4 @@
 add_subdirectory(BST)
 add_subdirectory(LinkedList)
 add_subdirectory(SegmentTree)
+add_subdirectory(SparseTable)
