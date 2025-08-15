@@ -1,0 +1,1 @@
+add_library(LinkCutTree LinkCutTree.h LinkCutTree.cpp)
