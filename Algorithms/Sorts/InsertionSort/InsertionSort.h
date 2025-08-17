@@ -5,13 +5,13 @@
 
 
 template <typename T>
-concept HasEqualityOperator = requires(T a, T b) {
+concept HasLessOperator = requires(T a, T b) {
     {a < b } -> std::convertible_to<bool>;
 };
 
 
 template <typename T>
-requires HasEqualityOperator<T>
+requires HasLessOperator<T>
 void insertionSort(std::vector<T> &arr) {
     for (size_t i = 1; i < arr.size(); ++i) {
         for (; i > 0 && arr[i] < arr[i - 1]; --i) {
