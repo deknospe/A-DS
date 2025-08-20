@@ -1,0 +1,1 @@
+add_library(BinaryMinHeap BinaryMinHeap.h BinaryMinHeap.cpp)
