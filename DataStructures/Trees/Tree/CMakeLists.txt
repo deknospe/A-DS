@@ -1,0 +1,1 @@
+add_library(Tree Tree.h Tree.cpp)

@@ -1,0 +1,1 @@
+add_library(SparseTable SparseTable.h SparseTable.cpp)

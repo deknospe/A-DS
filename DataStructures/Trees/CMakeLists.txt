@@ -1,0 +1,2 @@
+add_subdirectory(Tree)
+add_subdirectory(LinkCutTree)
