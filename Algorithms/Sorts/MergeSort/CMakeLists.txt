@@ -1,0 +1,1 @@
+add_library(MergeSort MergeSort.h MergeSort.cpp)

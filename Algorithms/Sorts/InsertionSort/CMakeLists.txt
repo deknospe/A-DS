@@ -1,0 +1,1 @@
+add_library(InsertionSort InsertionSort.h InsertionSort.cpp)
