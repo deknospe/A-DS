@@ -7,13 +7,15 @@
 
 
 template <typename T>
-concept HasLessOperator = requires(T a, T b) {
+concept IsComparable = requires(T a, T b) {
     { a < b } -> std::convertible_to<bool>;
+    { a > b } -> std::convertible_to<bool>;
+    { a == b } -> std::convertible_to<bool>;
 };
 
 
 template <typename T>
-requires HasLessOperator<T>
+requires IsComparable<T>
 static void merge(std::vector<T> &arr, const std::span<T> &leftPart, const std::span<T> &rightPart) {
     size_t i = 0, j = 0, k = 0;
     while (i < leftPart.size() && j < rightPart.size()) {
