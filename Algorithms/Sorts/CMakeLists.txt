@@ -1,2 +1,3 @@
 add_subdirectory(InsertionSort)
 add_subdirectory(MergeSort)
+add_subdirectory(HeapSort)
