@@ -11,7 +11,7 @@ public:
     explicit BinaryMinHeap(const std::vector<T> &arr) noexcept
         : arr(arr)
     {
-        for (size_t i = this->arr.size() / 2; i > 0; --i) {
+        for (size_t i = this->arr.size() / 2 - 1; i > 0; --i) {
             this->siftDown(i);
         }
         if (!this->arr.empty()) [[likely]] {
