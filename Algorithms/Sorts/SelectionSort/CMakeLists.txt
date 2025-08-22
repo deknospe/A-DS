@@ -1,0 +1,1 @@
+add_library(SelectionSort SelectionSort.h SelectionSort.cpp)
