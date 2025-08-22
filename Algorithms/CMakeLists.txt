@@ -1,1 +1,3 @@
 add_subdirectory(Sorts)
+add_subdirectory(k-thOrderStatistic)
+add_subdirectory(RandomUtils)

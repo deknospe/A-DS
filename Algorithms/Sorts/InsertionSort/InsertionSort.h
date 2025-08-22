@@ -1,15 +1,6 @@
 #pragma once
 #include <vector>
-#include <type_traits>
-#include <concepts>
-
-
-template <typename T>
-concept IsComparable = requires(T a, T b) {
-    { a < b } -> std::convertible_to<bool>;
-    { a > b } -> std::convertible_to<bool>;
-    { a == b } -> std::convertible_to<bool>;
-};
+#include "Concepts/Comparable/Comparable.h"
 
 
 template <typename T>
