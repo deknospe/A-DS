@@ -1,0 +1,1 @@
+add_library(Comparable Comparable.h Comparable.cpp)
