@@ -1,0 +1,1 @@
+add_library(RandomUtils RandomUtils.h RandomUtils.cpp)
