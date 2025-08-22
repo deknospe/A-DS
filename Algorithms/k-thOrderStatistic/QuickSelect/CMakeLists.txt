@@ -1,0 +1,1 @@
+add_library(QuickSelect QuickSelect.h QuickSelect.cpp)

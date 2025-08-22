@@ -1,0 +1,1 @@
+add_library(BFPRT BFPRT.h BFPRT.cpp)
