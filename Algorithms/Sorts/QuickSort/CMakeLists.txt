@@ -1,0 +1,2 @@
+add_subdirectory(HoareQuickSort)
+add_subdirectory(LomutoQuickSort)
